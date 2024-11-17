@@ -69,9 +69,8 @@ export const AuthProvider: FC<{children: ReactNode}> = ({children}) => {
     const login = async(email: string, password: string) => {
         try{
             const response = await axios.post(
-              //  "http://localhost:5000/api/auth/login",
-              `${BASE_URL}/api/auth/login`,
-
+              //  "http://localhost:5000/api/login",
+              `${BASE_URL}/api/login`,
               {email, password},
               { headers: { "Content-Type": "application/json" } }
             );
