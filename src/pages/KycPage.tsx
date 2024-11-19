@@ -1,9 +1,9 @@
-import Kyc from '../components/KYC/Kyc'
+// import Kyc from '../components/KYC/Kyc'
 
-function KycPage() {
-  return (
-    <Kyc/>
-  )
-}
+// function KycPage() {
+//   return (
+//     <Kyc/>
+//   )
+// }
 
-export default KycPage
+// export default KycPage
