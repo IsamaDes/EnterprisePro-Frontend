@@ -80,7 +80,7 @@ export const AuthProvider: FC<{children: ReactNode}> = ({children}) => {
             if (response.status === 200){
                 setUser(response.data.user);
                 toast.success("Login Successfull");
-                navigate("/dashboard")
+                navigate("/company-dashboard")
             }
         }catch(error){
              toast.error("Login failed");
