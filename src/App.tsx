@@ -39,7 +39,7 @@ import HomePage from "./pages/HomePage";
 import UpdateInformationPage from "./pages/UpdateInfoPage";
 import "./App.css";
 import SignupPage from "./pages/SignupPage";
-import KycPage from "./pages/KycPage";
+// import KycPage from "./pages/KycPage";
 import DirectorDetailsPage from "./pages/DirectorDetailsPage";
 import BusinessDashboardPage from "./pages/BusinessDashboardPage";
 import CompanyDashboardPage from "./pages/companyPages/CompanyDashboardPage";
