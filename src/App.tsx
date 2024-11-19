@@ -42,10 +42,12 @@ import SignupPage from "./pages/SignupPage";
 import KycPage from "./pages/KycPage";
 import DirectorDetailsPage from "./pages/DirectorDetailsPage";
 import BusinessDashboardPage from "./pages/BusinessDashboardPage";
-import CompanyDashboardPage from "./pages/CompanyDashboardPage";
+import CompanyDashboardPage from "./pages/companyPages/CompanyDashboardPage";
 import { AuthProvider } from "./context/AuthContext";
 import LoginPage from "./components/Login/Login";
 import AdminDetailsPage from "./pages/AdminDetailsPage";
+import SettingsPage from "./pages/companyPages/SettingsPage";
+import CompanyKycPage from "./pages/companyPages/CompanyKycPage";
 
 const App: React.FC = () => {
   return (
@@ -58,9 +60,12 @@ const App: React.FC = () => {
           <Route path="/update-information" element={<UpdateInformationPage />} />
           <Route path="/director-details" element={<DirectorDetailsPage/>} />
           <Route path="/admin-details" element={<AdminDetailsPage/>} />
-          <Route path="/dashboard" element={<CompanyDashboardPage />} />
+          <Route path="/company-dashboard" element={<CompanyDashboardPage />} />
           <Route path="/business-dashboard" element={<BusinessDashboardPage />} />
-          <Route path="/kyc" element={<KycPage />} />
+          <Route path="/kyc" element={<CompanyKycPage />} />
+          <Route path="/company-settings" element={<SettingsPage />} />
+
+
 
         </Routes>
       </AuthProvider>

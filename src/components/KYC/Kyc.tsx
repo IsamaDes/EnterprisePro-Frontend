@@ -94,14 +94,14 @@ const Kyc = () => {
   };
 
   return (
-    <div className='flex flex-col'>
-        <span className='text-[40px]'> Submit Your KYC Documents </span> 
-        <span className='text-[25px]'> Please upload the necessary documents to complete your account verification. </span>
+    <div className='flex bg-lightblue-200 flex-col'>
+        <span className='text-[40px] text-center'> Submit Your KYC Documents </span> 
+        <span className='text-[25px] text-center'> Please upload the necessary documents to complete your account verification. </span>
     
           {/* Modal */}
       {isModalOpen && <Modal message={modalMessage} onClose={handleModalClose} />}
 
-    <form className='flex flex-col' onSubmit={handleSubmit}>
+    <form className='flex flex-col p-10' onSubmit={handleSubmit}>
       <label htmlFor="name" className="mb-2 text-sm text-left font-semibold text-gray-700">Name</label>
       <input
         type="text"
@@ -110,7 +110,7 @@ const Kyc = () => {
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
-        className="border rounded-md p-2 mb-4"
+        className="border rounded-md p-2 mb-4 w-1/2"
       />
 
       {/* Address Field */}
@@ -122,7 +122,7 @@ const Kyc = () => {
         value={address}
         onChange={(e) => setAddress(e.target.value)}
         required
-        className="border rounded-md p-2 mb-4"
+        className="border rounded-md p-2 mb-4 w-1/2"
       />
 
       {/* Phone Number Field */}
@@ -134,7 +134,7 @@ const Kyc = () => {
         value={phoneNumber}
         onChange={(e) => setPhoneNumber(e.target.value)}
         required
-        className="border rounded-md p-2 mb-4"
+        className="border rounded-md p-2 mb-4 w-1/2"
       />
 
       {/* Date of Business Incorporation Field */}
@@ -145,17 +145,17 @@ const Kyc = () => {
         value={dateOfBusinessIncorporation}
         onChange={(e) => setDateOfBusinessIncorporation(e.target.value)}
         required
-        className="border rounded-md p-2 mb-4"
+        className="border rounded-md p-2 mb-4 w-1/2"
       />
 
       {/* Utility Bills Upload */}
-      <label htmlFor="utilityBills" className="mb-2 text-sm font-semibold text-left  text-gray-700">Utility Bills</label>
+      <label htmlFor="utilityBills" className="mb-2 mt-8 text-sm font-semibold text-left  text-gray-700">Utility Bills</label>
       <input
         type="file"
         id="utilityBills"
         onChange={(e) => handleFileChange(e, setUtilityBills)}
         required
-        className="border rounded-md p-2 mb-4"
+        className="border rounded-md p-2 mb-4  w-1/2"
       />
 
       {/* Certificate of Incorporation Upload */}
@@ -165,7 +165,7 @@ const Kyc = () => {
         id="certificateOfIncorporation"
         onChange={(e) => handleFileChange(e, setCertificateOfIncorporation)}
         required
-        className="border rounded-md p-2 mb-4"
+        className="border rounded-md p-2 mb-4 w-1/2"
       />
 
       {/* Memorandum and Articles of Association Upload */}
@@ -175,7 +175,7 @@ const Kyc = () => {
         id="memat"
         onChange={(e) => handleFileChange(e, setMemat)}
         required
-        className="border rounded-md p-2 mb-4"
+        className="border rounded-md p-2 mb-4 w-1/2"
       />
 
       {/* Operational License Upload */}
@@ -185,15 +185,15 @@ const Kyc = () => {
         id="operationLicense"
         onChange={(e) => handleFileChange(e, setOperationLicense)}
         required
-        className="border rounded-md p-2 mb-4"
+        className="border rounded-md p-2 mb-4 w-1/2"
       />
 
       {/* Submit Button */}
       <button
         type="submit"
-        className="bg-blue-500 text-white py-2 px-4 rounded-md"
+        className="bg-blue-500 w-[100px] mt-8 text-white py-2 px-4 rounded-md"
       >
-        Submit KYC Documents
+        Submit 
       </button>
     </form>
     </div>

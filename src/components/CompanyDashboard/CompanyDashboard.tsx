@@ -1,29 +1,163 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const CompanyDashboard: React.FC = () => {
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
-      <div className="w-1/4 bg-blue-400 p-8 shadow-md">
-        <h3 className="text-lg font-bold mb-4">Account Settings</h3>
-        <ul>
-          <li><Link to="/kyc" className="btn btn-outline-secondary w-full mb-2">KYC</Link></li>
-          <li><Link to="/director-details" className="btn btn-outline-secondary w-full mb-2">Details of Director</Link></li>
-          <li><Link to="/admin-details" className="btn btn-outline-secondary w-full mb-2">Details of Admin</Link></li>
-        </ul>
-      </div>
-      {/* Main Content */}
-      <div className="w-3/4 p-8">
-        <h2 className="text-2xl font-bold mb-6">Company Dashboard</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-gray-200 p-4 rounded">
-            <h3 className="text-lg font-bold">Registered Companies</h3>
-            <p>List of companies will be displayed here.</p>
+    <div className="flex min-h-screen bg-gray-200">
+    <div className=" flex flex-col p-5 w-full bg-blue-40">
+      {/* Stats Section */}
+      <div className="flex gap-5 justify-between ">
+        <div className="flex flex-col w-full">
+          <span className='text-left'>Hi, Fred</span>
+          <div className="flex w-full justify-between">
+            <span>Your Dashboard</span>
+            <div className="bg-white b-2">Date Component</div>
           </div>
-          {/* Other sections can be added as needed */}
         </div>
       </div>
+
+      {/* First Div (Grid) */}
+      <div className="flex ">
+        <div className="grid grid-cols-2 gap-4 mr-4 w-1/2 ">
+          <div className="flex flex-col items-left justify-center space-x-2 bg-white p-4 rounded-md shadow-sm">
+            <span>Number Of Registered Businesses</span>
+            <span className="text-[36px]">275</span>
+          </div>
+
+          <div className="flex flex-col items-left justify-center space-x-2 bg-white p-4 rounded-md shadow-sm">
+            <span>Active Agents</span>
+            <span className="text-[36px]">182</span>
+          </div>
+
+          {/* Open Tickets */}
+          <div className="flex flex-col items-left justify-center space-x-2 bg-white p-4 rounded-md shadow-sm">
+            <span>Pending QC tasks</span>
+            <span className="text-[36px]">2300</span>
+          </div>
+
+          {/* Closed Tickets */}
+          <div className="flex flex-col items-left justify-center space-x-2 bg-white p-4 rounded-md shadow-sm">
+            <span>Closed Tickets</span>
+            <span className="text-[36px]">42</span>
+          </div>
+        </div>
+
+        {/* Second Div (Businesses Section) */}
+        <div className="w-1/2 flex flex-col">
+          {/* Header Section */}
+          <div className="flex items-center justify-between p-4 bg-white">
+            <h2 className="text-2xl font-semibold">Registered Businesses</h2>
+
+            <button
+              // onClick={handleSeeAll}
+              className="flex justify-center text-[13px] items-center text-red-900 py-2 px-4 rounded-md hover:bg-red-600"
+            >
+              See All
+              {/* <img src={rightangle} alt="Arrow" /> */}
+            </button>
+          </div>
+
+          {/* List of Businesses */}
+          <div>
+            {/* Render Businesses */}
+            {/* {escalations.map((escalation, index) => ( */}
+              
+          
+          </div>
+        </div>
+      </div>
+
+      {/* Buttons Section */}
+      <div className="mt-8 flex justify-start space-x-4">
+        {/* Search Enrollee Button */}
+      
+        <button
+          className="flex items-center justify-center bg-red-900 text-white py-2 px-4 rounded-md hover:bg-red-300"
+        >
+          Search Business
+        </button>
+
+        <button
+          className="flex items-center justify-center bg-red-900 text-white py-2 px-4 rounded-md hover:bg-red-300"
+        >
+          {/* <img src={plusbutton} alt="Create Ticket" className="w-5 h-5 mr-2" /> */}
+          Create Ticket
+        </button>
+      </div>
+
+      {/* Data Table Section */}
+      <div className="overflow-x-auto mt-8 bg-white">
+        {/* <table className="min-w-full"> */}
+          <thead>
+            <tr className="border-b-2">
+              <th className="py-3 px-4 text-transparent text-left">Image</th>
+              <th className="py-3 px-4 text-left">
+                Name
+                
+              </th>
+              <th className="py-3 px-4 text-left">
+                agent ID
+               
+              </th>
+              <th className="py-3 px-4 text-left">
+                
+               
+              </th>
+              
+              <th className="py-3 px-4 text-left">
+                <button
+                  className="py-2 px-4 flex items-center  text-red-500 rounded-md"
+                  // onClick={() => setShowAll(!showAll)}
+                >
+                  {/* {showAll ? "Show Less" : "Show All"} */}
+                </button>
+              </th>
+            </tr>
+          </thead>
+{/* 
+          <tbody>
+            {paginateData
+              .filter((item) => {
+                return (
+                  item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  item.enrolleeId
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) ||
+                  item.date.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+              })
+              .map((item, index) => (
+                <tr key={index} className="border-b">
+                  <td className="py-2 px-4">
+                    <img
+                      src={item.image}
+                      alt="User"
+                      className="w-10 h-10 rounded-full"
+                    />
+                  </td>
+                  <td className="py-2 px-4">{item.name}</td>
+                  <td className="py-2 px-4">{item.enrolleeId}</td>
+                  <td className="py-2 px-4">{item.date}</td>
+                  <td className="py-2 px-4">{item.hospital}</td>
+                  <td className="py-2 px-4">{item.diagnosis}</td>
+                  <td className="py-2 px-4">{item.status}</td>
+                  <td className="py-2 px-10">...</td>
+                </tr>
+              ))}
+          </tbody>
+        </table> */}
+
+        {/* Pagination */}
+        <div className="flex justify-center mt-4"></div>
+      </div>
+    </div>
+  
+
+
+
+
+
+
+
     </div>
   );
 };
