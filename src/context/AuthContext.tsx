@@ -1,122 +1,106 @@
-import React, {createContext, useState, ReactNode, useContext, FC}  from 'react';
-import axios from 'axios';
-import {useNavigate} from 'react-router-dom';
-import {toast}  from 'react-toastify';
-
-
+import React, { createContext, useState, ReactNode, useContext, FC } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface FormData {
-    businessName: string,
-        contactPerson: string,
-        email: string,
-        phone: string,
-        location: string,
-        password: string,
+  businessName: string;
+  contactPerson: string;
+  email: string;
+  phone: string;
+  location: string;
+  password: string;
 }
 
-
-interface AuthContextType{
-    user: any;
-
-    formData: FormData; 
-
-    setFormData: React.Dispatch<React.SetStateAction<FormData>>;
-    register: (formData: FormData) => void
-    // register: (businessName: string, contactPerson: string, email: string, phone: string, location: string, password: string ) => void;
-    login: (email: string, password: string) => void;
-    logout:() => void;
-    
-    }
+interface AuthContextType {
+  user: any;
+  formData: FormData;
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  register: (formData: FormData) => void;
+  login: (email: string, password: string) => void;
+  logout: () => void;
+}
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
+export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [formData, setFormData] = useState<FormData>({
+    businessName: "",
+    contactPerson: "",
+    email: "",
+    phone: "",
+    location: "",
+    password: "",
+  });
 
+  const navigate = useNavigate();
 
-export const AuthProvider: FC<{children: ReactNode}> = ({children}) => {
-    const [user, setUser] = useState(null);
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState<FormData>({
-        businessName: "",
-        contactPerson: "",
-        email: "",
-        phone: "",
-        location: "",
-        password: "",
-    })
+  const handleRegistrationSuccess = () => {
+    toast.success("Account successfully created");
+    alert("Registration successful! Redirecting to login...");
+    navigate("/update-information");
+  };
 
-    const register = async(formData: FormData)=>{
-        try {
-            const response = await axios.post(
-              // "http://localhost:5000/api/auth/register",
-              `${BASE_URL}/api/auth/register`,
-              formData,
-              { headers: { "Content-Type": "application/json" } }
-            );
-      
-            if (response.status === 201) {
-              toast.success("Account successfully created");
-              alert("Registration successful! Redirecting to login...");
-              navigate("/update-information");
-            }
-          } catch (error: any) {
-            toast.error("Error creating account");
-            console.error("Error registering user:", error);
-          }
-    }
+  const handleLoginSuccess = (response: any) => {
+    setUser(response.data.user);
+        toast.success("Login Successful");
+        navigate("/company-dashboard");
+  }
 
-
-    const login = async(email: string, password: string) => {
-        try{
-            const response = await axios.post(
-              //  "http://localhost:5000/api/login",
-              `${BASE_URL}/api/login`,
-              {email, password},
-              { headers: { "Content-Type": "application/json" } }
-            );
-
-            if (response.status === 200){
-                setUser(response.data.user);
-                toast.success("Login Successfull");
-                navigate("/company-dashboard")
-            }
-        }catch(error){
-             toast.error("Login failed");
-             console.error("Error logging in:", error);
-
-        }
-    };
-
-
-       
-
-
-
-    const logout = () => {
-        setUser(null);
-        navigate("/login");
-
-    }
-
-    const value = {
-        user,
+  const register = async (formData: FormData) => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/api/auth/register`,
         formData,
-        setFormData,
-        register,
-        login,
-        logout,
-      };
+        { headers: { "Content-Type": "application/json" } }
+      );
 
-      return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+      if (response.status === 201) {
+        handleRegistrationSuccess();
+      }
+    } catch (error: any) {
+      toast.error("Error creating account");
+      console.error("Error registering user:", error);
+    }
+  };
 
-      
+  const login = async (email: string, password: string) => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/api/login`,
+        { email, password },
+        { headers: { "Content-Type": "application/json" } }
+      );
 
-}
+      if (response.status === 200) {
+        handleLoginSuccess(response);
+      }
+    } catch (error) {
+      toast.error("Login failed");
+      console.error("Error logging in:", error);
+    }
+  };
 
+  const logout = () => {
+    setUser(null);
+    navigate("/login");
+  };
 
-//Custom hook to use auth context
+  const value = {
+    user,
+    formData,
+    setFormData,
+    register,
+    login,
+    logout,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
