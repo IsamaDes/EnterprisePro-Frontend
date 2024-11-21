@@ -1,5 +1,5 @@
 import React, { createContext, useState, ReactNode, useContext, FC } from "react";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -23,7 +23,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const BASE_URL = "http://localhost:5000";
 
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -46,9 +46,10 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const handleLoginSuccess = (response: any) => {
     setUser(response.data.user);
-        toast.success("Login Successful");
-        navigate("/company-dashboard");
-  }
+    localStorage.setItem('token', response.data.token); // Store token in local storage
+    toast.success("Login Successful");
+    navigate("/company-dashboard");
+  };
 
   const register = async (formData: FormData) => {
     try {
@@ -62,7 +63,11 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
         handleRegistrationSuccess();
       }
     } catch (error: any) {
-      toast.error("Error creating account");
+      if (isAxiosError(error) && error.response) {
+        toast.error(`Error: ${error.response.data.message}`);
+      } else {
+        toast.error("Error creating account");
+      }
       console.error("Error registering user:", error);
     }
   };
@@ -74,7 +79,6 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
         { email, password },
         { headers: { "Content-Type": "application/json" } }
       );
-
       if (response.status === 200) {
         handleLoginSuccess(response);
       }
@@ -86,6 +90,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem('token');  // Remove the token on logout
     navigate("/login");
   };
 
@@ -97,9 +102,9 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     login,
     logout,
   };
-
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
