@@ -310,7 +310,7 @@ function Home() {
       <section className="py-16 bg-blue-500 text-white text-center">
         <div className="container mx-auto px-6">
           <h2 className="text-[18px] font-bold mb-6">Ready to Take Your Business to the Next Level?</h2>
-          <Link to="/register">
+          <Link to="/api/auth/register">
             <button className="bg-white text-blue-500 py-3 px-6 rounded-lg hover:bg-gray-100">
               Get Started
             </button>

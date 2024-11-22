@@ -23,7 +23,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const HOSTED_URL = import.meta.env.VITE_API_URL || "https://enterprisepro-backend.onrender.com";
+const HOSTED_URL = import.meta.env.VITE_API_URL;
 const LOCAL_URL = "http://localhost:5000";
 
 
@@ -44,12 +44,12 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   // Function to determine which URL to use
   const getBaseUrl = async (): Promise<string> => {
     try {
-      await axios.get(`${HOSTED_URL}/health-check`); // Check hosted app availability
-      return HOSTED_URL;
+      return LOCAL_URL
+      
     } catch {
       console.warn("Hosted app unavailable, falling back to localhost.");
-      return LOCAL_URL;
-    }
+      await axios.get(`${HOSTED_URL}/health-check`); // Check hosted app availability
+      return HOSTED_URL;    }
   };
 
   const handleRegistrationSuccess = () => {
@@ -79,6 +79,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       }
     } catch (error: any) {
       if (isAxiosError(error) && error.response) {
+        console.error("Axios error details:", error.response);
         toast.error(`Error: ${error.response.data.message}`);
       } else {
         toast.error("Error creating account");
@@ -90,6 +91,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const login = async (email: string, password: string) => {
     try {
       const baseUrl = await getBaseUrl();
+      console.log("Using base URL:", baseUrl);
       const response = await axios.post(
         `${baseUrl}/api/login`,
         { email, password },
