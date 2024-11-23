@@ -48,19 +48,16 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const handleLoginSuccess = (response: any) => {
     setUser(response.data.user);
-    localStorage.setItem("token", response.data.token); // Store token in local storage
+    localStorage.setItem("token", response.data.token); 
     toast.success("Login Successful");
     navigate("/company-dashboard");
   };
 
   const register = async (formData: FormData) => {
-    try {
-      // Use the correct base URL (HOSTED_URL or LOCAL_URL)
-      
-  
+    try {  
       // Make the registration request
       const response = await axios.post(
-        `${baseUrl}/api/register`,
+        `${baseUrl}/api/auth/register`,
         formData,
         { headers: { "Content-Type": "application/json" } }
       );
