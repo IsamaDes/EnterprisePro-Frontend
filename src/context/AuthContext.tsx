@@ -24,7 +24,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // const LOCAL_URL = "http://localhost:5000";
-const HOSTED_URL = import.meta.env.VITE_API_URL || "https://enterprisepro-backend.onrender.com";
+const baseUrl =  "https://enterprisepro-backend.onrender.com";
 
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -56,11 +56,11 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const register = async (formData: FormData) => {
     try {
       // Use the correct base URL (HOSTED_URL or LOCAL_URL)
-      const baseUrl = HOSTED_URL;
+      
   
       // Make the registration request
       const response = await axios.post(
-        `${baseUrl}/api/auth/register`,
+        `${baseUrl}/api/register`,
         formData,
         { headers: { "Content-Type": "application/json" } }
       );
@@ -81,7 +81,6 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      const baseUrl = HOSTED_URL;
       const response = await axios.post(
         `${baseUrl}/api/login`,
         { email, password },
