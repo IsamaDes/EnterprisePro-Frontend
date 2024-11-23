@@ -23,10 +23,8 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const HOSTED_URL = import.meta.env.VITE_API_URL;
-const LOCAL_URL = "http://localhost:5000";
-
-
+// const LOCAL_URL = "http://localhost:5000";
+const HOSTED_URL = import.meta.env.VITE_API_URL || "https://enterprisepro-backend.onrender.com";
 
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -41,17 +39,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const navigate = useNavigate();
 
-  // Function to determine which URL to use
-  const getBaseUrl = async (): Promise<string> => {
-    try {
-      return LOCAL_URL
-      
-    } catch {
-      console.warn("Hosted app unavailable, falling back to localhost.");
-      await axios.get(`${HOSTED_URL}/health-check`); // Check hosted app availability
-      return HOSTED_URL;    }
-  };
-
+  // Function to handle successful registration
   const handleRegistrationSuccess = () => {
     toast.success("Account successfully created");
     alert("Registration successful! Redirecting to login...");
@@ -60,20 +48,23 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const handleLoginSuccess = (response: any) => {
     setUser(response.data.user);
-    localStorage.setItem('token', response.data.token); // Store token in local storage
+    localStorage.setItem("token", response.data.token); // Store token in local storage
     toast.success("Login Successful");
     navigate("/company-dashboard");
   };
 
   const register = async (formData: FormData) => {
     try {
-      const baseUrl = await getBaseUrl();
+      // Use the correct base URL (HOSTED_URL or LOCAL_URL)
+      const baseUrl = HOSTED_URL;
+  
+      // Make the registration request
       const response = await axios.post(
         `${baseUrl}/api/auth/register`,
         formData,
         { headers: { "Content-Type": "application/json" } }
       );
-
+  
       if (response.status === 201) {
         handleRegistrationSuccess();
       }
@@ -90,8 +81,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      const baseUrl = await getBaseUrl();
-      console.log("Using base URL:", baseUrl);
+      const baseUrl = HOSTED_URL;
       const response = await axios.post(
         `${baseUrl}/api/login`,
         { email, password },
@@ -108,7 +98,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('token');  // Remove the token on logout
+    localStorage.removeItem("token"); // Remove the token on logout
     navigate("/login");
   };
 
@@ -120,9 +110,9 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     login,
     logout,
   };
+  
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
-
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
