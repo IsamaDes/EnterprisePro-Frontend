@@ -56,11 +56,10 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const register = async (formData: FormData) => {
     try {  
       // Make the registration request
-      const response = await axios.post(
-        `${baseUrl}/api/auth/register`,
-        formData,
-        { headers: { "Content-Type": "application/json" } }
-      );
+      const response = await axios.post('https://enterprisepro-backend.onrender.com/api/auth/register', formData);
+  
+      console.log('Registration response:', response);
+
   
       if (response.status === 201) {
         handleRegistrationSuccess();
