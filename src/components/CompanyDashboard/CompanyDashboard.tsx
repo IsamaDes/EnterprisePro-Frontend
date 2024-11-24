@@ -113,38 +113,6 @@ const CompanyDashboard: React.FC = () => {
               </th>
             </tr>
           </thead>
-{/* 
-          <tbody>
-            {paginateData
-              .filter((item) => {
-                return (
-                  item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                  item.enrolleeId
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase()) ||
-                  item.date.toLowerCase().includes(searchTerm.toLowerCase())
-                );
-              })
-              .map((item, index) => (
-                <tr key={index} className="border-b">
-                  <td className="py-2 px-4">
-                    <img
-                      src={item.image}
-                      alt="User"
-                      className="w-10 h-10 rounded-full"
-                    />
-                  </td>
-                  <td className="py-2 px-4">{item.name}</td>
-                  <td className="py-2 px-4">{item.enrolleeId}</td>
-                  <td className="py-2 px-4">{item.date}</td>
-                  <td className="py-2 px-4">{item.hospital}</td>
-                  <td className="py-2 px-4">{item.diagnosis}</td>
-                  <td className="py-2 px-4">{item.status}</td>
-                  <td className="py-2 px-10">...</td>
-                </tr>
-              ))}
-          </tbody>
-        </table> */}
 
         {/* Pagination */}
         <div className="flex justify-center mt-4"></div>
