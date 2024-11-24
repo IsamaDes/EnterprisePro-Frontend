@@ -1,8 +1,7 @@
-import Signup from '../components/SignUp/Signup'
-
+import Register from '../components/SignUp/RegisterPage'
 function SignupPage() {
   return (
-    <Signup/>
+    <Register/>
   )
 }
 
