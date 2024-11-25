@@ -243,7 +243,7 @@ function Home() {
             </Link>
             <Link to="/register">
               <button className="bg-green-500 text-white py-3 px-6 rounded-lg hover:bg-green-600">
-                Register
+                Get Started
               </button>
             </Link>
           </div>
