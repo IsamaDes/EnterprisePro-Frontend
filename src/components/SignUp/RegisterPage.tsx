@@ -41,7 +41,7 @@ const Register = () => {
 
       // Success handling: Display toast and redirect
       toast.success(`Registration successful! ${response.data.message}`);
-      navigate('/update-information');
+      navigate('/confirm-email');
     } catch (error) {
       // Error handling: Display toast
       toast.error('Error during registration');
