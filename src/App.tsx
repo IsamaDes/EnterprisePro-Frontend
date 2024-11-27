@@ -8,7 +8,7 @@ import DirectorDetailsPage from "./pages/DirectorDetailsPage";
 import BusinessDashboardPage from "./pages/BusinessDashboardPage";
 import CompanyDashboardPage from "./pages/companyPages/CompanyDashboardPage";
 import { AuthProvider } from "./context/AuthContext";
-// import LoginPage from "./components/Login/Login";
+import LoginPage from "./components/Login/Login";
 import AdminDetailsPage from "./pages/AdminDetailsPage";
 import SettingsPage from "./pages/companyPages/SettingsPage";
 import CompanyKycPage from "./pages/companyPages/CompanyKycPage";
@@ -22,7 +22,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<SignupPage />} />
-          {/* <Route path="/login" element={<LoginPage />} /> */}
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/update-information" element={<UpdateInformationPage />} />
           <Route path="/director-details" element={<DirectorDetailsPage/>} />
           <Route path="/admin-details" element={<AdminDetailsPage/>} />

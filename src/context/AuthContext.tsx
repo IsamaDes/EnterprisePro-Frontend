@@ -1,8 +1,9 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
+import axios from 'axios';
 
 interface AuthContextProps {
   user: any;
-  // login: (userData: any) => void;
+  login: (email: string, password: string) => Promise<void>
   logout: () => void;
 }
 
@@ -11,15 +12,23 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<any>(null);
 
-  // const login = (userData: any) => setUser(userData);
+  const login = async(email: string, password: string) => {
+      try{
+       const response = await axios.post( '/api/auth/login', {email, password});
+       setUser(response.data.user);
+
+      }catch(error){
+       console.error('Login Failed', error);
+       throw error;
+      }
+
+  }
+
+
   const logout = () => setUser(null);
 
   return (
-    <AuthContext.Provider value={{ user, 
-    
-    // login, 
-    
-    logout }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
