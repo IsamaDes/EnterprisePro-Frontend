@@ -1,19 +1,22 @@
-// ConfirmEmail.jsx
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
+import axios from 'axios'; // Import axios
 
 const EmailConfirmation = () => {
-  const { token } = useParams(); // Extract token from URL
-  const navigate = useNavigate(); // Navigation hook
+  const { token } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const confirmEmail = async () => {
       try {
-        const response = await fetch(`/confirmation/${token}`, {
-          method: 'GET', // Explicitly set the method to GET
+        const response = await axios.get(`/confirmation/${token}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          }
         });
-        if (response.ok) {
+        if (response.status === 200) {
           toast.success('Email confirmed successfully');
           navigate('/login'); // Redirect to login page
         } else {
