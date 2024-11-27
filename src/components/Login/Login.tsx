@@ -28,7 +28,7 @@ const Login: React.FC = () => {
     try{
         login(email, password);
         toast.success('Login successful!');
-        navigate('/upload-information')
+        navigate('/update-information')
 
     }catch(error){
         toast.error('Login failed. Please check your credentials and try again.');
