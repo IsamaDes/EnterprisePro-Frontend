@@ -8,12 +8,12 @@ import DirectorDetailsPage from "./pages/DirectorDetailsPage";
 import BusinessDashboardPage from "./pages/BusinessDashboardPage";
 import CompanyDashboardPage from "./pages/companyPages/CompanyDashboardPage";
 import { AuthProvider } from "./context/AuthContext";
-import LoginPage from "./components/Login/Login";
 import AdminDetailsPage from "./pages/AdminDetailsPage";
 import SettingsPage from "./pages/companyPages/SettingsPage";
 import CompanyKycPage from "./pages/companyPages/CompanyKycPage";
 import EmailConfirmation from "./components/ConfirmEmail/EmailConfirmation";
 import ConfirmEmail from "./components/ConfirmEmail/ConfirmEmail";
+import LoginPage from "./pages/LoginPage";
 
 const App: React.FC = () => {
   return (
