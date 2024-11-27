@@ -27,7 +27,7 @@ const EmailConfirmation = () => {
 
         if (response.status === 200) {
           toast.success('Email confirmed successfully');
-          navigate('/login');
+          navigate('api/auth/login');
         }
       } catch (error) {
         console.error('Full Error Object:', error);
