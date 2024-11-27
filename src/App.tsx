@@ -30,7 +30,8 @@ const App: React.FC = () => {
           <Route path="/business-dashboard" element={<BusinessDashboardPage />} />
           <Route path="/kyc" element={<CompanyKycPage />} />
           <Route path="/company-settings" element={<SettingsPage />} />
-          <Route path="/confirmation/:token" element={<EmailConfirmation/>} />    
+
+          <Route path="/confirmation/:token" element={<EmailConfirmation />} />  
           <Route path="/confirm-email" element={<ConfirmEmail/>} />          
       
 
