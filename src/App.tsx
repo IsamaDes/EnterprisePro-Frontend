@@ -12,6 +12,7 @@ import { AuthProvider } from "./context/AuthContext";
 import AdminDetailsPage from "./pages/AdminDetailsPage";
 import SettingsPage from "./pages/companyPages/SettingsPage";
 import CompanyKycPage from "./pages/companyPages/CompanyKycPage";
+import EmailConfirmation from "./components/ConfirmEmail/EmailConfirmation";
 import ConfirmEmail from "./components/ConfirmEmail/ConfirmEmail";
 
 const App: React.FC = () => {
@@ -29,7 +30,9 @@ const App: React.FC = () => {
           <Route path="/business-dashboard" element={<BusinessDashboardPage />} />
           <Route path="/kyc" element={<CompanyKycPage />} />
           <Route path="/company-settings" element={<SettingsPage />} />
-          <Route path="/confirm-email" element={<ConfirmEmail />} />
+          <Route path="/confirmation/:token" element={<EmailConfirmation/>} />    
+          <Route path="/confirm-email" element={<ConfirmEmail/>} />          
+      
 
         </Routes>
       </AuthProvider>
