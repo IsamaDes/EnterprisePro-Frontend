@@ -2,12 +2,17 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {useNavigate } from 'react-router-dom';
+
 
 const Login: React.FC = () => {
   const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const navigate = useNavigate(); // Navigation hook
+
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -23,6 +28,7 @@ const Login: React.FC = () => {
     try{
         login(email, password);
         toast.success('Login successful!');
+        navigate('/upload-information')
 
     }catch(error){
         toast.error('Login failed. Please check your credentials and try again.');
@@ -58,7 +64,7 @@ const Login: React.FC = () => {
             />
           </div>
           <button type="submit" className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${ isSubmitting ? 'opacity-50 cursor-not-allowed' : '' }`} disabled={isSubmitting} > {isSubmitting ? 'Submitting...' : 'Login'} 
-            
+
           </button>
         </form>
         <ToastContainer />
