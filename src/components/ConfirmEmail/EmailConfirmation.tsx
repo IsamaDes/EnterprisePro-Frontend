@@ -3,8 +3,13 @@ import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
-// Configure axios base URL
-axios.defaults.baseURL = 'https://enterprisepro-backend.onrender.com';
+const api = axios.create({
+  baseURL: 'https://enterprisepro-backend.onrender.com',
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+  }
+});
 
 const EmailConfirmation = () => {
   const { token } = useParams();
@@ -12,24 +17,29 @@ const EmailConfirmation = () => {
 
   useEffect(() => {
     const confirmEmail = async () => {
+      console.log('Confirmation Token:', token);
+      console.log('Full URL:', `/api/confirmation/${token}`);
+
       try {
-        // Use the route as configured in your backend
-        const response = await axios.get(`/confirmation/${token}`, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
+        const response = await api.get(`/api/confirmation/${token}`);
+
+        console.log('Full Response:', response);
 
         if (response.status === 200) {
           toast.success('Email confirmed successfully');
           navigate('/login');
         }
       } catch (error) {
-        console.error('Detailed confirmation error:', error);
-        
+        console.error('Full Error Object:', error);
+
         if (axios.isAxiosError(error)) {
+          console.error('Axios Error Details:', {
+            status: error.response?.status,
+            data: error.response?.data,
+            headers: error.response?.headers
+          });
+
           if (error.response) {
-            // The request was made and the server responded with a status code
             switch (error.response.status) {
               case 400:
                 toast.error('Invalid confirmation token');
@@ -41,14 +51,14 @@ const EmailConfirmation = () => {
                 toast.error('Server error during email confirmation');
                 break;
               default:
-                toast.error('Error confirming email');
+                toast.error(`Unexpected error: ${error.response.status}`);
             }
           } else if (error.request) {
-            // The request was made but no response was received
-            toast.error('No response from server. Please check your network connection.');
+            toast.error('No response from server. Check network connection.');
+            console.error('Request made but no response:', error.request);
           } else {
-            // Something happened in setting up the request
             toast.error('Error setting up confirmation request');
+            console.error('Error setting up request:', error.message);
           }
         }
       }
@@ -61,7 +71,8 @@ const EmailConfirmation = () => {
 
   return (
     <div>
-      <p>Confirming your email... Please wait.</p>
+      <h2>Email Confirmation</h2>
+      <p>Processing your confirmation... Please wait.</p>
     </div>
   );
 };
